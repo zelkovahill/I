@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Indoor_Backup.sln"
+    "dotnet.defaultSolution": "Indoor.sln"
 }
