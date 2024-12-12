@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject ARNavGuidePanel;
     [SerializeField] private Button QRCodeScanButton;
     [SerializeField] private TextMeshProUGUI pathDistanceText;
+    [SerializeField] private GameObject MiniMap_Panel;
+    [SerializeField] private GameObject Crosshair_Panel;
 
     [Header("#2 컴포넌트")]
     [SerializeField] private QrCodeRecenter qrCodeRecenter;
@@ -19,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.fullScreen = false;
         QRCodeScanButton.onClick.AddListener(EnableQRCodeScanning);
     }
 
@@ -26,6 +29,7 @@ public class UIManager : MonoBehaviour
     {
         qrCodeRecenter.SetScanningState(true);
         ARNavGuidePanel.SetActive(false);
+        Crosshair_Panel.SetActive(true);
 
         // 스캐닝 시작 시 거리 업데이트 중지
         if (updateDistanceCoroutine != null)

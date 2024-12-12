@@ -45,6 +45,15 @@ public class SetNavigationTarget : MonoBehaviour
             // float pathDistance = CalculatePathDistance(path);
 
             // Debug.Log($"직선 거리: {(int)straightLineDistance}m, 경로 거리: {(int)pathDistance}m");
+
+            // 타겟 도달 여부 확인
+            float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+            if (distanceToTarget < 1.0f) // 도달 거리 기준 설정 (예: 1.0m)
+            {
+                Debug.Log("타겟에 도달했습니다!");
+                ToggleVisibility(); // 라인 비활성화
+                targetPosition = Vector3.zero; // 타겟 초기화
+            }
         }
     }
 
@@ -155,10 +164,10 @@ public class SetNavigationTarget : MonoBehaviour
             navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("109"));
             navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("StartPoint"));
         }
-        if (floorNumber == 2)
-        {
-            navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("Song"));
-            navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("Kang"));
-        }
+        // if (floorNumber == 2)
+        // {
+        //     navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("Song"));
+        //     navigationTargetDropDown.options.Add(new TMP_Dropdown.OptionData("Kang"));
+        // }
     }
 }
