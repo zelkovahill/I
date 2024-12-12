@@ -14,6 +14,8 @@ public class SetNavigationTarget : MonoBehaviour
     [SerializeField] private List<Target> navigationTargetObjects = new List<Target>();
     [SerializeField] private Slider navigationYOffset;
 
+    [SerializeField] private UIManager uiManager;
+
     private NavMeshPath path;
     private LineRenderer line;
     private Vector3 targetPosition = Vector3.zero;
@@ -37,6 +39,12 @@ public class SetNavigationTarget : MonoBehaviour
             line.positionCount = path.corners.Length;
             Vector3[] calculatedPathAndOffset = AddLineOffset();
             line.SetPositions(calculatedPathAndOffset);
+
+            // // 거리 계산
+            // float straightLineDistance = Vector3.Distance(transform.position, targetPosition);
+            // float pathDistance = CalculatePathDistance(path);
+
+            // Debug.Log($"직선 거리: {(int)straightLineDistance}m, 경로 거리: {(int)pathDistance}m");
         }
     }
 
@@ -55,14 +63,56 @@ public class SetNavigationTarget : MonoBehaviour
 
             targetPosition = currentTarget.PositionObject.transform.position;
         }
+    }
+
+    public float GetPathDistance()
+    {
+        if (path == null || path.corners.Length < 2)
+        {
+            return 0f; // 유효한 경로가 없을 경우 거리 0 반환
+        }
+
+        float totalDistance = 0f;
+        for (int i = 0; i < path.corners.Length - 1; i++)
+        {
+            totalDistance += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+        }
+
+        return totalDistance;
+    }
 
 
+
+
+    private float CalculatePathDistance(NavMeshPath path)
+    {
+        if (path.corners.Length < 2)
+        {
+            return 0f; // 코너가 2개 미만이면 유효한 경로가 아님
+        }
+
+        float totalDistance = 0f;
+        for (int i = 0; i < path.corners.Length - 1; i++)
+        {
+            totalDistance += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+        }
+
+        return totalDistance;
     }
 
     public void ToggleVisibility()
     {
         lineToggle = !lineToggle;
         line.enabled = lineToggle;
+
+        if (lineToggle) // 라인이 활성화될 때 거리 업데이트를 시작
+        {
+            uiManager.StartUpdatingDistanceUI();
+        }
+        else // 라인이 비활성화될 때 거리 업데이트를 중지
+        {
+            uiManager.StopUpdatingDistanceUI();
+        }
     }
 
     public void ChangeActiveFloor(int floorNumber)

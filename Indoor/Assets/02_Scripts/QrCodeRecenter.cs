@@ -14,8 +14,12 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private ARCameraManager cameraManager;
     [SerializeField] private List<Target> navigationTargetObjects = new List<Target>();
 
+    [SerializeField] private SetNavigationTarget setNavigationTarget;
+
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
+
+    private bool isScanningEabled = false;
 
     private void Update()
     {
@@ -37,6 +41,11 @@ public class QrCodeRecenter : MonoBehaviour
 
     private void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
     {
+        if (!isScanningEabled)
+        {
+            return;
+        }
+
         if (!cameraManager.TryAcquireLatestCpuImage(out XRCpuImage image))
         {
             return;
@@ -97,5 +106,10 @@ public class QrCodeRecenter : MonoBehaviour
     public void ChangeActiveFloor(string floorEntrance)
     {
         SetQrCodeRecenterTarget(floorEntrance);
+    }
+
+    public void SetScanningState(bool state)
+    {
+        isScanningEabled = state;
     }
 }
