@@ -59,6 +59,7 @@ public class SetNavigationTarget : MonoBehaviour
 
     public void SetCurrentNavigationTarget(int selecedValue)
     {
+        uiManager.SetActiveDistancePanel(true);
         targetPosition = Vector3.zero;
         string selectedText = navigationTargetDropDown.options[selecedValue].text;
         Target currentTarget = navigationTargetObjects.Find(x => x.Name.Equals(selectedText.ToLower()));

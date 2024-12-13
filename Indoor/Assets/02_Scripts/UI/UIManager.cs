@@ -9,9 +9,11 @@ public class UIManager : MonoBehaviour
     [Header("#1 UI 요소")]
     [SerializeField] private GameObject ARNavGuidePanel;
     [SerializeField] private Button QRCodeScanButton;
+    [SerializeField] private GameObject DistancePanel;
     [SerializeField] private TextMeshProUGUI pathDistanceText;
     [SerializeField] private GameObject MiniMap_Panel;
     [SerializeField] private GameObject Crosshair_Panel;
+    [SerializeField] private GameObject NavigationTagetDropdown;
 
     [Header("#2 컴포넌트")]
     [SerializeField] private QrCodeRecenter qrCodeRecenter;
@@ -53,6 +55,26 @@ public class UIManager : MonoBehaviour
             StopCoroutine(updateDistanceCoroutine);
             updateDistanceCoroutine = null;
         }
+    }
+
+    public void SetActiveDistancePanel(bool isActive)
+    {
+        DistancePanel.SetActive(isActive);
+    }
+
+    public void SetActiveMiniMapPanel(bool isActive)
+    {
+        MiniMap_Panel.SetActive(isActive);
+    }
+
+    public void SetActiveCrosshairPanel(bool isActive)
+    {
+        Crosshair_Panel.SetActive(isActive);
+    }
+
+    public void SetActiveNavigationTagetDropdown(bool isActive)
+    {
+        NavigationTagetDropdown.SetActive(isActive);
     }
 
     private IEnumerator UpdateDistanceUI()

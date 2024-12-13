@@ -15,6 +15,7 @@ public class QrCodeRecenter : MonoBehaviour
     [SerializeField] private List<Target> navigationTargetObjects = new List<Target>();
 
     [SerializeField] private SetNavigationTarget setNavigationTarget;
+    [SerializeField] private UIManager uiManager;
 
     private Texture2D cameraImageTexture;
     private IBarcodeReader reader = new BarcodeReader();
@@ -26,6 +27,9 @@ public class QrCodeRecenter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SetQrCodeRecenterTarget("102");
+            uiManager.SetActiveMiniMapPanel(true);
+            uiManager.SetActiveCrosshairPanel(false);
+            uiManager.SetActiveNavigationTagetDropdown(true);
         }
     }
 
