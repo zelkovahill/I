@@ -27,9 +27,9 @@ public class QrCodeRecenter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SetQrCodeRecenterTarget("102");
-            uiManager.SetActiveMiniMapPanel(true);
-            uiManager.SetActiveCrosshairPanel(false);
-            uiManager.SetActiveNavigationTagetDropdown(true);
+            // uiManager.SetActiveMiniMapPanel(true);
+            // uiManager.SetActiveCrosshairPanel(false);
+            // uiManager.SetActiveNavigationTagetDropdown(true);
         }
     }
 
@@ -104,6 +104,12 @@ public class QrCodeRecenter : MonoBehaviour
 
             sessionOrigin.transform.position = currentTarget.PositionObject.transform.position;
             sessionOrigin.transform.rotation = currentTarget.PositionObject.transform.rotation;
+
+            uiManager.SetActiveMiniMapPanel(true);
+            uiManager.SetActiveCrosshairPanel(false);
+            uiManager.SetActiveNavigationTagetDropdown(true);
+            uiManager.SetActivemainMenuButton(true);
+            uiManager.SetActiveExitButton2(false);
         }
     }
 

@@ -50,11 +50,21 @@ public class SetNavigationTarget : MonoBehaviour
             float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
             if (distanceToTarget < 1.0f) // 도달 거리 기준 설정 (예: 1.0m)
             {
-                Debug.Log("타겟에 도달했습니다!");
+                uiManager.SetActiveDistancePanel(false);
+                uiManager.SetActiveArrivePlacePanel(true);
+                // Debug.Log("타겟에 도달했습니다!");
                 ToggleVisibility(); // 라인 비활성화
                 targetPosition = Vector3.zero; // 타겟 초기화
+
+                StartCoroutine(HideArrivePlacePanel(3.0f));
             }
         }
+    }
+
+    private IEnumerator HideArrivePlacePanel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        uiManager.SetActiveArrivePlacePanel(false);
     }
 
     public void SetCurrentNavigationTarget(int selecedValue)
@@ -117,12 +127,20 @@ public class SetNavigationTarget : MonoBehaviour
 
         if (lineToggle) // 라인이 활성화될 때 거리 업데이트를 시작
         {
+            uiManager.SetActiveSearchPanel(true);
+            StartCoroutine(HideSearchPanel(3.0f));
             uiManager.StartUpdatingDistanceUI();
         }
         else // 라인이 비활성화될 때 거리 업데이트를 중지
         {
             uiManager.StopUpdatingDistanceUI();
         }
+    }
+
+    private IEnumerator HideSearchPanel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        uiManager.SetActiveSearchPanel(false);
     }
 
     public void ChangeActiveFloor(int floorNumber)
